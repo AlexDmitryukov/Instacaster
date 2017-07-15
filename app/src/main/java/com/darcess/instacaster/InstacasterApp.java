@@ -15,11 +15,14 @@ import static com.darcess.instacaster.util.Global.INSTAGRAM_API_BASE;
 public class InstacasterApp extends Application {
 
     private ApplicationComponent mComponent;
+    private static final String TAG = Application.class.getCanonicalName();
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         initializeApplicationComponent();
+
     }
 
     //Note
@@ -39,5 +42,4 @@ public class InstacasterApp extends Application {
     public void onTerminate() {
         super.onTerminate();
     }
-
 }

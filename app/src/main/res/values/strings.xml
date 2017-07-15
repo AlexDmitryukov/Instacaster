@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Instacaster</string>
+
+    <string name="com_auth0_client_id">KxxPzY6iLRDz2s85ClawYVEzKoCAT9Lx"</string>
+    <string name="com_auth0_domain">instacaster.auth0.com"</string>
 </resources>
