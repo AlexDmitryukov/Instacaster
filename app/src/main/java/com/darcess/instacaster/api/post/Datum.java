@@ -19,6 +19,7 @@ public class Datum {
     private String mType;
     @SerializedName("user")
     private User mUser;
+    
 
     public Caption getCaption() {
         return mCaption;
@@ -76,4 +77,19 @@ public class Datum {
         mUser = user;
     }
 
+    public String getUsername(){
+        return getUser().getUsername();
+    }
+
+    public String getText(){
+        return getCaption()==null?"":getCaption().getText();
+    }
+
+    public String getPostImgUrl(){
+        return getImages().getStandardResolution().getUrl();
+    }
+
+    public String getUserImgUrl(){
+        return getUser().getProfilePicture();
+    }
 }

@@ -21,4 +21,21 @@ public class Global {
     public static final String LONGITUDE_MOCK = "-80.1588699";
     public static final String LATITUDE_MOCK = "26.16505";
     public static final String LOCATION_ID_MOCK = "267076014";
+
+    public static final String ID = "id";
+    public static final String USER_NAME = "username";
+    public static final String TEXT = "text";
+    public static final String POST_URL = "postUrl";
+    public static final String PROFILE_URL = "imageUrl";
+    public static final String TABLE_NAME = "posts";
+    public static final int DB_VERSION = 1;
+
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    public static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME;
+    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" +
+            ID + " integer primary key autoincrement not null," +
+            USER_NAME + " text not null," +
+            TEXT + " text not null," +
+            POST_URL + " text not null," +
+            PROFILE_URL + " text not null)";
 }

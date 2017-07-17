@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.darcess.instacaster.R;
 import com.darcess.instacaster.api.post.Datum;
+import com.darcess.instacaster.mvp.Model.dbPost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder> {
 
     private LayoutInflater mInflater;
-    private List<Datum> mList = new ArrayList<>();
+    private List<dbPost> mList = new ArrayList<>();
 
     public PostAdapter(LayoutInflater layoutInflater) {
         mInflater = layoutInflater;
@@ -60,13 +61,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder> {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Datum datum) {
-            Glide.with(mContext).load(datum.getUser().getProfilePicture())
+        public void bind(dbPost datum) {
+            Glide.with(mContext).load(datum.getUserImgUrl())
                     .into(ivUserImg);
-            Glide.with(mContext).load(datum.getImages().getStandardResolution().getUrl())
+            Glide.with(mContext).load(datum.getPostImgUrl())
                     .into(ivPostImg);
-            tvPostTitle.setText(datum.getUser().getUsername());
-            tvPostText.setText(datum.getCaption()==null?"":datum.getCaption().getText());
+            tvPostTitle.setText(datum.getUsername());
+            tvPostText.setText(datum.getText());
         }
     }
 
@@ -75,7 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder> {
         return mList.size()>10?10:mList.size();
     }
 
-    public void updateList(List<Datum> list){
+    public void updateList(List<dbPost> list){
         mList = list;
         notifyDataSetChanged();
     }
