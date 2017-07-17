@@ -3,21 +3,59 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_content"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
 
-    <Button
-        android:id="@+id/reloginB"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Relogin" />
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:weightSum="7">
+
+        <ImageButton
+            android:id="@+id/reloadB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:src="@android:drawable/stat_notify_sync_noanim" />
+
+        <TextView
+            android:id="@+id/locationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:text="Current Location" />
+
+        <EditText
+            android:id="@+id/radiusEV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center_horizontal"
+            android:inputType="number"
+            android:maxLength="4"
+            android:text="500" />
+
+        <Button
+            android:id="@+id/reloginB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Relogin"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/commentsList" >
+        android:id="@+id/postList" >
 
     </android.support.v7.widget.RecyclerView>
 

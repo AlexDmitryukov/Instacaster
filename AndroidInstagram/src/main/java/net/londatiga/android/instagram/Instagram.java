@@ -48,7 +48,7 @@ public class Instagram {
 		mClientSecret	= clientSecret;
 		mRedirectUri	= redirectUri;
 		
-		String authUrl	= Cons.AUTH_URL + "client_id=" + mClientId + "&redirect_uri=" + mRedirectUri + "&response_type=code" + "&scope=public_content+relationships";
+		String authUrl	= Cons.AUTH_URL + "client_id=" + mClientId + "&redirect_uri=" + mRedirectUri + "&response_type=code" + "&scope=public_content";
 		
 		mSession		= new InstagramSession(context);
 		

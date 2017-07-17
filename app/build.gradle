@@ -48,4 +48,5 @@ dependencies {
 
     compile "com.jakewharton:butterknife:$butterknive_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknive_version"
+    compile project(path: ':AndroidInstagram')
 }
