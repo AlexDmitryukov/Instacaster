@@ -5,12 +5,19 @@ import android.util.Log;
 
 import com.darcess.instacaster.Base.BasePresenter;
 import com.darcess.instacaster.api.InstagramApiService;
+import com.darcess.instacaster.api.post.Datum;
 import com.darcess.instacaster.api.post.PostResponse;
+import com.darcess.instacaster.mvp.Model.Storage;
+import com.darcess.instacaster.mvp.Model.dbPost;
 import com.darcess.instacaster.mvp.View.MainView;
+import com.darcess.instacaster.util.NetworkUtils;
 
 import net.londatiga.android.instagram.Instagram;
 import net.londatiga.android.instagram.InstagramSession;
 import net.londatiga.android.instagram.InstagramUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,6 +48,9 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
     protected InstagramApiService mApiService;
 
     @Inject
+    protected Storage mStorage;
+
+    @Inject
     public MainPresenter() {
     }
 
@@ -51,7 +61,7 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
         if(!isActive()){
             loginInstagram();
         } else {
-            getPosts();
+            getPosts(context);
         }
     }
 
@@ -70,12 +80,11 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
     private Instagram.InstagramAuthListener mAuthListener = new Instagram.InstagramAuthListener() {
         @Override
         public void onSuccess(InstagramUser user) {
-            getPosts();
+            loadOnlinePosts();
         }
 
         @Override
         public void onError(String error) {
-
         }
 
         @Override
@@ -85,8 +94,22 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
     };
 
     //POSTS
-    public void getPosts(){
+    public void getPosts(Context context){
         getView().showMessage("Loading...");
+        if(NetworkUtils.isOnline(context)){
+            loadOnlinePosts();
+        } else {
+            loadDbPosts();
+        }
+    }
+
+    private void loadDbPosts() {
+        getView().showPosts(mStorage.getSavedPosts());
+        getView().hideDialog();
+        getView().showToast("Loaded from local storage");
+    }
+
+    private void loadOnlinePosts() {
         Observable<PostResponse> PostResponseObservable = mApiService.getPosts(
                 LATITUDE_MOCK,
                 LONGITUDE_MOCK,
@@ -101,15 +124,15 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
 
     @Override
     public void onSuccess(PostResponse response) {
-        if(response.getData().size()<10){
+        if(response.getData().size()<10 && radius <5000){
             getView().showToast("Not enough posts, expanding the search radius");
             getView().setRadius(radius*2);
-            getPosts();
+            loadOnlinePosts();
         } else {
             getView().hideToast();
             getView().hideDialog();
             getView().showToast("Loading complete");
-            getView().showPosts(response);
+            getView().showPosts(mapResponse(response.getData()));
         }
     }
 
@@ -126,6 +149,21 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
             message = "Error loading";
         }
         getView().showToast(message);
+    }
+
+    public List<dbPost> mapResponse(List<Datum> datumList){
+        List<dbPost> postList = new ArrayList<>();
+        for(int i=0; i< datumList.size();i++){
+            dbPost post = new dbPost(
+                    datumList.get(i).getUsername(),
+                    datumList.get(i).getText(),
+                    datumList.get(i).getUserImgUrl(),
+                    datumList.get(i).getPostImgUrl()
+            );
+            postList.add(post);
+            mStorage.addPost(post);
+        }
+        return postList;
     }
 
     //LOCATION

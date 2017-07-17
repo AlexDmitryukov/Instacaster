@@ -15,8 +15,11 @@ import com.darcess.instacaster.api.post.PostResponse;
 import com.darcess.instacaster.di.DaggerMainComponent;
 import com.darcess.instacaster.di.MainModule;
 import com.darcess.instacaster.Base.BaseActivity;
+import com.darcess.instacaster.mvp.Model.dbPost;
 import com.darcess.instacaster.mvp.Presenter.MainPresenter;
 import com.darcess.instacaster.mvp.View.MainView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import butterknife.BindView;
@@ -51,7 +54,7 @@ public class MainActivity extends BaseActivity  implements MainView {
 
     @OnClick(R.id.reloadB)
     public void onClickReload(){
-        mPresenter.getPosts();
+        mPresenter.getPosts(this);
     }
 
     @Override
@@ -81,8 +84,8 @@ public class MainActivity extends BaseActivity  implements MainView {
     }
 
     @Override
-    public void showPosts(PostResponse response) {
-        mAdapter.updateList(response.getData());
+    public void showPosts(List<dbPost> response) {
+        mAdapter.updateList(response);
     }
 
     @Override
