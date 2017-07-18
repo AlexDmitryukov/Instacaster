@@ -53,6 +53,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     testCompile "junit:junit:$junit_version"
+    testCompile 'org.robolectric:robolectric:3.+'
 
     provided "com.google.dagger:dagger-compiler:$dagger_version"
     compile "com.google.dagger:dagger:$dagger_version"
