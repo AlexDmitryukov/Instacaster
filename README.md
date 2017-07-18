@@ -11,3 +11,11 @@ Application is build with the MVP pattern in mind and core dependencies are inje
 Instagram Login Library
 https://github.com/lorensiuswlt/AndroidInstagram
 
+RxPermissions
+https://github.com/tbruyelle/RxPermissions
+
+Test Users:
+Will be provided in the email
+
+
+
