@@ -1,6 +1,12 @@
 package com.darcess.instacaster.mvp.Presenter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.darcess.instacaster.Base.BasePresenter;
@@ -11,6 +17,8 @@ import com.darcess.instacaster.mvp.Model.Storage;
 import com.darcess.instacaster.mvp.Model.dbPost;
 import com.darcess.instacaster.mvp.View.MainView;
 import com.darcess.instacaster.util.NetworkUtils;
+import com.google.android.gms.awareness.Awareness;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import net.londatiga.android.instagram.Instagram;
 import net.londatiga.android.instagram.InstagramSession;
@@ -27,6 +35,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import retrofit2.adapter.rxjava2.HttpException;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static com.darcess.instacaster.util.Global.CLIENT_ID;
 import static com.darcess.instacaster.util.Global.CLIENT_SECRET;
 import static com.darcess.instacaster.util.Global.LATITUDE_MOCK;
@@ -38,8 +47,9 @@ import static com.darcess.instacaster.util.Global.REDIRECT_URI;
  * Created by Alexander Dmitryukov on 7/14/2017.
  */
 
-public class MainPresenter extends BasePresenter<MainView>  implements SingleObserver<PostResponse> {
+public class MainPresenter extends BasePresenter<MainView> implements SingleObserver<PostResponse> {
 
+    private GoogleApiClient mGoogleApiClient;
     private InstagramSession mInstagramSession;
     private Instagram mInstagram;
     private int radius;
@@ -58,11 +68,17 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
     public void initInstagram(Context context) {
         mInstagram = new Instagram(context, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
         mInstagramSession = mInstagram.getSession();
-        if(!isActive()){
+        if (!isActive()) {
             loginInstagram();
         } else {
             getPosts(context);
         }
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(Awareness.API)
+                .build();
+
+        mGoogleApiClient.connect();
+        getlocation();
     }
 
     public boolean isActive() {
@@ -73,7 +89,7 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
         mInstagram.authorize(mAuthListener);
     }
 
-    public void reloginInstagram(){
+    public void reloginInstagram() {
         mInstagramSession.reset();
     }
 
@@ -94,9 +110,9 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
     };
 
     //POSTS
-    public void getPosts(Context context){
+    public void getPosts(Context context) {
         getView().showMessage("Loading...");
-        if(NetworkUtils.isOnline(context)){
+        if (NetworkUtils.isOnline(context)) {
             loadOnlinePosts();
         } else {
             loadDbPosts();
@@ -124,9 +140,9 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
 
     @Override
     public void onSuccess(PostResponse response) {
-        if(response.getData().size()<10 && radius <5000){
+        if (response.getData().size() < 10 && radius < 5000) {
             getView().showToast("Not enough posts, expanding the search radius");
-            getView().setRadius(radius*2);
+            getView().setRadius(radius * 2);
             loadOnlinePosts();
         } else {
             getView().hideToast();
@@ -141,9 +157,9 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
         getView().hideDialog();
         String message;
         int code = ((HttpException) e).response().code();
-        if(code == 400){
-            message ="Invalid parameters";
-        } else if (code == 429){
+        if (code == 400) {
+            message = "Invalid parameters";
+        } else if (code == 429) {
             message = "Exceeded request limits";
         } else {
             message = "Error loading";
@@ -151,9 +167,9 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
         getView().showToast(message);
     }
 
-    public List<dbPost> mapResponse(List<Datum> datumList){
+    public List<dbPost> mapResponse(List<Datum> datumList) {
         List<dbPost> postList = new ArrayList<>();
-        for(int i=0; i< datumList.size();i++){
+        for (int i = 0; i < datumList.size(); i++) {
             dbPost post = new dbPost(
                     datumList.get(i).getUsername(),
                     datumList.get(i).getText(),
@@ -167,6 +183,18 @@ public class MainPresenter extends BasePresenter<MainView>  implements SingleObs
     }
 
     //LOCATION
+    public void getlocation(){
+        Awareness.SnapshotApi.getLocation(mGoogleApiClient)
+                .setResultCallback(locationResult -> {
+                    if (!locationResult.getStatus().isSuccess()) {
+                        Log.e("promotion", "Could not get location.");
+                        return;
+                    } else {
+                        Log.d("LOCAION", locationResult.getLocation().toString());
+                    }
+                });
+    }
+
     public void reloadLocation(String location){
         getView().updateLocation(location);
     }
