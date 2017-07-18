@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "230701717692",
+    "firebase_url": "https://instacaster-37af9.firebaseio.com",
+    "project_id": "instacaster-37af9",
+    "storage_bucket": "instacaster-37af9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230701717692:android:22b0b3507f76aeab",
+        "android_client_info": {
+          "package_name": "com.darcess.instacaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230701717692-b2jlkqk2qu4b73dhqniggibmpgnfa11b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFZnb8kjJGSwUJB2t8leEIyylECLM_YWc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

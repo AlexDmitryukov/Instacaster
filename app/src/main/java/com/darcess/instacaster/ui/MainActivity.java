@@ -28,7 +28,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity  implements MainView {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
     private PostAdapter mAdapter;
     private Toast toast;
 
@@ -54,14 +53,14 @@ public class MainActivity extends BaseActivity  implements MainView {
 
     @OnClick(R.id.reloadB)
     public void onClickReload(){
-        mPresenter.getPosts(this);
+        mPresenter.getlocation();
     }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent){
         super.onViewReady(savedInstanceState, intent);
         setupPostsList();
-        mPresenter.initInstagram(this);
+        mPresenter.init(this);
     }
 
     private void setupPostsList() {
