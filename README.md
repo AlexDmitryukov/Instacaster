@@ -17,5 +17,14 @@ https://github.com/tbruyelle/RxPermissions
 Test Users:
 Will be provided in the email
 
+Test Location: Wilton Manors, FL 
 
+<code>
+    LATITUDE_MOCK = 26.16505
+    LONGITUDE_MOCK = -80.1588699
+</code>
+<br />
+<img src="https://user-images.githubusercontent.com/22647547/28331324-990389da-6bbe-11e7-8720-9badce243342.jpg" width="250">
+<img src="https://user-images.githubusercontent.com/22647547/28331327-9b4793f8-6bbe-11e7-897a-3d016ad7ab36.jpg" width="250">
+<img src="https://user-images.githubusercontent.com/22647547/28331330-9d382d80-6bbe-11e7-8b46-32cfc4ad4afc.jpg" width="250">
 
