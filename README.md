@@ -8,6 +8,14 @@ User is supposed to be able to authenticate with Instagram and pull 10 most rece
 
 Application is build with the MVP pattern in mind and core dependencies are injected with Dagger.
 
+TODO:
+<br />
+Test cases for Presenter and View
+<br />
+Refactoring Presenter
+<br />
+UI tweaks
+
 Instagram Login Library
 https://github.com/lorensiuswlt/AndroidInstagram
 
