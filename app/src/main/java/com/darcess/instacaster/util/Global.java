@@ -14,12 +14,12 @@ public class Global {
 
     public final static String INSTAGRAM_GET_MEDIA = "media/search";
 
-    public static final String CLIENT_ID = "5eab9987e6994a94ba2d400bfee5f510";
-    public static final String CLIENT_SECRET = "913c93d78ba143919538d5cfda21759a";
+    public static final String CLIENT_ID = "fd0f0174f95443718f3367d29e1dbf14";
+    public static final String CLIENT_SECRET = "983e0065a3bb4190922addfa8a6ab1d5";
     public static final String REDIRECT_URI = "https://darcess.com";
 
-    public static final String LONGITUDE_MOCK = "-80.1588699";
-    public static final String LATITUDE_MOCK = "26.16505";
+    public static final double LONGITUDE_MOCK = -80.1588699;
+    public static final double LATITUDE_MOCK = 26.16505;
     public static final String LOCATION_ID_MOCK = "267076014";
 
     public static final String ID = "id";

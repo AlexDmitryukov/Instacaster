@@ -153,8 +153,6 @@ public class InstagramDialog extends Dialog {
 	
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
-		mListener.onCancel();
 		
 	}
 	private class InstagramWebViewClient extends WebViewClient {

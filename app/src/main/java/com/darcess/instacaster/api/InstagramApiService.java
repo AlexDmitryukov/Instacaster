@@ -19,10 +19,6 @@ import static com.darcess.instacaster.util.Global.INSTAGRAM_GET_MEDIA;
 
 public interface InstagramApiService {
 
-    @GET(INSTAGRAM_GET_COMMENTS)
-    Observable<PostResponse> getPosts(@Path(value = "location-id", encoded = true) String locationId,
-                                      @Query("access_token") String instagramKey);
-
     @GET(INSTAGRAM_GET_MEDIA)
     Observable<PostResponse> getPosts(@Query("lat") String latitude,
                                       @Query("lng") String longitude,
